@@ -2,9 +2,19 @@ from copy import deepcopy
 
 
 class Node:
-    def __init__(self):
-        self.__board = [[7, 5, 6], [4, 3, 2], [0, 1, 8]]
+    def __init__(self, board=None):
+        if board:
+            self.__board = deepcopy(board)
+        else:
+            self.__board = [[7, 5, 6], [4, 3, 2], [0, 1, 8]]
         # self.child = set()  # unsorted collection of with no duplicate elements
+
+    @property
+    def state(self):
+        """
+        :return: hash of the node
+        """
+        return str(self)
 
     def get_board(self):
         return self.__board
@@ -19,14 +29,9 @@ class Node:
         return str1
 
     def __eq__(self, other):
-        return self.__board == other.__board
+        return self.state == other.state
 
-    @property
-    def state(self):
-        """
-        :return: hash of the node
-        """
-        return str(self)
+
 
 
 
