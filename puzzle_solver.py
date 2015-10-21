@@ -60,8 +60,8 @@ class Solver:
     @staticmethod
     def bfs():
         root = Node()
-        if root.get_board() == Solver.solution:
-            return root.get_board()
+        if root.board == Solver.solution:
+            return root.board
         frontier = deque()
         frontier.append(root)
         explored = set()
@@ -73,13 +73,13 @@ class Solver:
             node = frontier.popleft()
             explored.add(node.state)
             # problem being solved
-            i, j = Solver.find_blank_space(node.get_board())
+            i, j = Solver.find_blank_space(node.board)
             for movement in Solver.board_movements[(i, j)]:
                 child_node = Node()
-                new_board = Solver.change_element_position(node.get_board(), (i, j), movement)
-                child_node.set_board(new_board)
+                new_board = Solver.change_element_position(node.board, (i, j), movement)
+                child_node.board = new_board
                 if child_node not in frontier or child_node.state not in explored:
-                        if child_node.get_board() == Solver.solution:
+                        if child_node.board == Solver.solution:
                             return child_node
                         frontier.append(child_node)
                         explored.add(child_node.state)
