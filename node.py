@@ -12,8 +12,10 @@ class Node:
             # 0 self._board = [[0, 1, 3], [4, 2, 5], [7, 8, 6]]
             # self._board = [[8, 0, 6], [5, 4, 7], [2, 3, 1]]
             # self._board = [[0, 8, 4], [2, 6, 1], [3, 5, 7]]
-            self._board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+            # self._board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
             # self._board = [[1, 2, 3], [4, 5, 6], [8, 7, 0]]
+            # self._board = [[2, 7, 3], [4, 8, 1], [0, 6, 5]]
+            self._board = [[3, 2, 7], [5, 6, 8], [4, 1, 0]]
 
             # self._board = [[1,2,3], [4,5,6], [7,8,0]]
         self._parent = None
@@ -40,11 +42,13 @@ class Node:
         '''
         node_str = ''.join(str(item) for row in self.board for item in row)
         return node_str
+
     '''
         This property creates the getter for the board object and
         it is possible to access it by just: object.board instead of
         using object.get_board
     '''
+
     @property
     def board(self):
         return self._board
@@ -54,6 +58,7 @@ class Node:
         Instead of typing object.set_board(value), one can just
         use it like a normal variable: object.board = value
     '''
+
     @board.setter
     def board(self, new_board):
         self._board = [elem[:] for elem in new_board]

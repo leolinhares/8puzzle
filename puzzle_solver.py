@@ -82,15 +82,16 @@ class Solver:
 
             for child in Solver.generate_children(node):
                 if child.state not in visited:
-                    # o pai da raiz nao existe
-                    if node.parent is None:
-                        queue.appendleft(child)
-                    # filhos nao podem ser iguais ao avo
-                    elif child.state != node.parent.state:
-                        queue.appendleft(child)
+                    if child.state == Solver.solution.state:
+                        return child
+                    # # o pai da raiz nao existe
+                    # if node.parent is None:
+                    #     queue.appendleft(child)
+                    # # filhos nao podem ser iguais ao avo
+                    # elif child.state != node.parent.state:
+                    #     queue.appendleft(child)
                     else:
-                        pass
-                    queue.appendleft(child)
+                        queue.appendleft(child)
         return "Error"
 
     # @staticmethod
