@@ -2,6 +2,7 @@ from node import Node
 from copy import deepcopy
 from collections import deque
 
+
 class Solver:
     solution = Node([[1, 2, 3], [4, 5, 6], [7, 8, 0]])
 
@@ -32,7 +33,7 @@ class Solver:
     def swap(board, parent_coordinates, child_coordinates):
         i, j = child_coordinates
         a, b = parent_coordinates
-        copy_board = deepcopy(board)
+        copy_board = [elem[:] for elem in board]
 
         aux = copy_board[i][j]
         copy_board[i][j] = 0  # copy_board[a][b]
@@ -81,16 +82,15 @@ class Solver:
 
             for child in Solver.generate_children(node):
                 if child.state not in visited:
-                    # # o pai da raiz nao existe
-                    # if node.parent is None:
-                    #     queue.appendleft(child)
-                    # # filhos nao podem ser iguais ao avo
-                    # elif child.state != node.parent.state:
-                    #     queue.appendleft(child)
-                    # else:
-                    #     pass
+                    # o pai da raiz nao existe
+                    if node.parent is None:
+                        queue.appendleft(child)
+                    # filhos nao podem ser iguais ao avo
+                    elif child.state != node.parent.state:
+                        queue.appendleft(child)
+                    else:
+                        pass
                     queue.appendleft(child)
-                    print(len(visited))
         return "Error"
 
     # @staticmethod
