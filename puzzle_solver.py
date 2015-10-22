@@ -1,5 +1,4 @@
 from node import Node
-from copy import deepcopy
 from collections import deque
 
 
@@ -62,6 +61,7 @@ class Solver:
                 pass
             child_board = Solver.swap(parent.board, (parent_i, parent_j), (child_i, child_j))
             child = Node(child_board)
+            child.move = movement
             child.parent = parent
             children.append(child)
         return children
@@ -84,97 +84,29 @@ class Solver:
                 if child.state not in visited:
                     if child.state == Solver.solution.state:
                         return child
-                    # # o pai da raiz nao existe
-                    # if node.parent is None:
-                    #     queue.appendleft(child)
-                    # # filhos nao podem ser iguais ao avo
-                    # elif child.state != node.parent.state:
-                    #     queue.appendleft(child)
                     else:
                         queue.appendleft(child)
         return "Error"
 
-    # @staticmethod
-    # def path(solution_node, root):
-    #     path = []
-    #     node = solution_node
-    #     while node.parent.state != root.state:
-    #         path.append(node)
-    #         node = node.parent
-    #     path.append(root)
-    #     return path
+    @staticmethod
+    def draw_path(node_result):
 
-    # @staticmethod
-    # def change_element_position(board, zero_position, movement):
-    #     """
-    #     :param board: matrix[3][3]
-    #     :param zero_position: tuple with the position of element zero
-    #     :param movement: with move will be executed
-    #     :return: a new board after the change of an element's position
-    #     """
-    #     new_board = deepcopy(board)
-    #     i, j = zero_position
-    #     if movement == 'L' and j > 0:
-    #         aux = new_board[i][j - 1]
-    #         new_board[i][j - 1] = 0
-    #         new_board[i][j] = aux
-    #     elif movement == 'U' and i > 0:
-    #         aux = new_board[i - 1][j]
-    #         new_board[i - 1][j] = 0
-    #         new_board[i][j] = aux
-    #     elif movement == 'R' and j >= 0:
-    #         aux = new_board[i][j + 1]
-    #         new_board[i][j + 1] = 0
-    #         new_board[i][j] = aux
-    #     elif movement == 'D' and i >= 0:
-    #         aux = new_board[i + 1][j]
-    #         new_board[i + 1][j] = 0
-    #         new_board[i][j] = aux
-    #     else:
-    #         pass
-    #     return new_board
+        path = []
+        aux = node_result
+        while aux.parent is not None:
+            path.append((aux, aux.move))
+            aux = aux.parent
 
-    # @staticmethod
-    # def backtrace(parent, root):
-    #     s = Solver()
-    #     path = [s.solution.state]
-    #     while path[-1] != root.state:
-    #         path.append(parent[path[-1]])
-    #     path.reverse()
-    #     return path
+        path.append((aux, aux.move))
 
-    # def bfs(self):
-    #     root = Node()
-    #
-    #     if root.state == self.solution.state:
-    #         print("eita")
-    #         return root.board
-    #
-    #     frontier = deque()  # Creating a FIFO (queue)
-    #     frontier.append(root)  # Adding the root to the frontier (which will be following explored)
-    #     explored = set()  # Creating an empty set to store the explored notes
-    #     explored.add(root.state)
-    #     # a = 0
-    #     # checking if the queue is empty
-    #     while frontier:
-    #         node = frontier.popleft()  # Removing the first element of the queue (will be explored)
-    #
-    #         if node.state == self.solution.state:
-    #             return node
-    #
-    #         # problem being solved
-    #         i, j = Solver.find_blank_space(node.board)  # Find the tuple (i, j) with the zero location
-    #         movements = Solver.board_movements[(i, j)]
-    #         for movement in movements:
-    #
-    #             # Creating the new board for the child node based on one of the allowed movements
-    #             new_board = Solver.change_element_position(node.board, (i, j), movement)
-    #             child_node = Node(Solver.empty_board)
-    #             child_node.board = new_board
-    #
-    #             if child_node.state not in explored:
-    #                 child_node.parent = node
-    #                 frontier.appendleft(child_node)
-    #                 explored.add(child_node.state)
-    #     return "error"
+        print (len(path))
+
+        path.reverse()
+        for node, move in path:
+            print(move)
+            print(node)
+
+        # while path:
+        #     print(path.pop())
+
 

@@ -1,12 +1,10 @@
-from copy import deepcopy
-
-
 class Node:
     def __init__(self, board=None):
+        self.move = ''
         if board:
             self._board = [elem[:] for elem in board]
         else:
-            # self._board = [[6, 4, 0], [8, 1, 7], [5, 2, 3]]
+            self._board = [[6, 4, 0], [8, 1, 7], [5, 2, 3]]
             # self._board = [[1, 2, 0], [4, 5, 3], [7, 8, 6]]
             # 0 self._board = [[1, 2, 3], [4, 5, 6], [7, 0, 8]]
             # 0 self._board = [[0, 1, 3], [4, 2, 5], [7, 8, 6]]
@@ -15,16 +13,18 @@ class Node:
             # self._board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
             # self._board = [[1, 2, 3], [4, 5, 6], [8, 7, 0]]
             # self._board = [[2, 7, 3], [4, 8, 1], [0, 6, 5]]
-            self._board = [[3, 2, 7], [5, 6, 8], [4, 1, 0]]
+            # self._board = [[3, 2, 7], [5, 6, 8], [4, 1, 0]]
 
             # self._board = [[1,2,3], [4,5,6], [7,8,0]]
         self._parent = None
 
+    # @property
+    # def move(self):
+    #     return
+
     @property
     def parent(self):
         return self._parent
-
-    #doifdsjfoisdjfsoifj
 
     @parent.setter
     def parent(self, parent):
@@ -72,7 +72,7 @@ class Node:
         """
         str1 = ''
         for row in self.board:
-            str1 = str1 + "\n" + ''.join(str(e) for e in row)
+            str1 = str1 + ' '.join(str(e) for e in row) + '\n'
         return str1
 
     def __eq__(self, other):
