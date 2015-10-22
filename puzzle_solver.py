@@ -4,7 +4,22 @@ from copy import copy, deepcopy
 
 
 class Solver:
-    solution = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
+    def __init__(self):
+        self.solution = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
+
+    @property
+    def state(self):
+        return str(self)
+
+    def __str__(self):
+        """
+        Method designed to overwrite the print function.
+        :return: a properly formatted node printed
+        """
+        str1 = ''
+        for row in self.solution:
+            str1 = str1 + "\n" + ''.join(str(e) for e in row)
+        return str1
 
     board_movements = {(0, 0): ('R', 'D'),
                        (0, 1): ('L', 'R', 'D'),
@@ -15,6 +30,8 @@ class Solver:
                        (2, 0): ('U', 'R'),
                        (2, 1): ('L', 'U', 'R'),
                        (2, 2): ('L', 'U')}
+
+    empty_board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 
     @staticmethod
     def find_blank_space(board):
@@ -57,29 +74,34 @@ class Solver:
             pass
         return new_board
 
-    @staticmethod
-    def bfs():
+    def bfs(self):
         root = Node()
-        if root.board == Solver.solution:
+
+        if root.state == self.state:
             return root.board
-        frontier = deque()
-        frontier.append(root)
-        explored = set()
-        while True:
-            print(explored)
-            # check if the queue is empty
-            if not frontier:
-                return 'Deu rrrrruim'
-            node = frontier.popleft()
-            explored.add(node.state)
+
+        frontier = deque()  # Creating a FIFO (queue)
+        frontier.append(root)  # Adding the root to the frontier (which will be following explored)
+        explored = set()  # Creating an empty set to store the explored notes
+        explored.add(root.state)
+        # a = 0
+        # checking if the queue is empty
+        while frontier:
+            node = frontier.pop()  # Removing the first element of the queue (will be explored)
+
+            if node.state == self.state:
+                return node
+
             # problem being solved
-            i, j = Solver.find_blank_space(node.board)
-            for movement in Solver.board_movements[(i, j)]:
-                child_node = Node()
+            i, j = Solver.find_blank_space(node.board)  # Find the tuple (i, j) with the zero location
+            movements = Solver.board_movements[(i, j)]
+            for movement in movements:
+
+                # Creating the new board for the child node based on one of the allowed movements
                 new_board = Solver.change_element_position(node.board, (i, j), movement)
+                child_node = Node(Solver.empty_board)
                 child_node.board = new_board
-                if child_node not in frontier or child_node.state not in explored:
-                        if child_node.board == Solver.solution:
-                            return child_node
-                        frontier.append(child_node)
-                        explored.add(child_node.state)
+
+                if child_node.state not in explored:
+                    frontier.appendleft(child_node)
+                    explored.add(child_node.state)

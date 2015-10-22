@@ -6,8 +6,11 @@ class Node:
         if board:
             self._board = deepcopy(board)
         else:
-            self._board = [[1, 2, 0], [4, 5, 3], [7, 8, 6]]
-            # self.child = set()  # unsorted collection of with no duplicate elements
+            # self._board = [[6, 4, 0], [8, 1, 7], [5, 2, 3]]
+            # self._board = [[1, 2, 0], [4, 5, 3], [7, 8, 6]]
+            # self._board = [[1, 2, 3], [4, 5, 6], [7, 0, 8]]
+            # self._board = [[0, 1, 3], [4, 2, 5], [7, 8, 6]]
+            self._board = [[2, 6, 8], [3, 4, 1], [7, 8, 0]]
 
     @property
     def state(self):
