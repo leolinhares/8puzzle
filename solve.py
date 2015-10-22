@@ -1,7 +1,6 @@
 from puzzle_solver import Solver
 import time
 start_time = time.time()
-s = Solver()
-print(s.bfs())
+print(Solver.breadth_first_search())
 print("--- %s seconds ---" % (time.time() - start_time))
 
