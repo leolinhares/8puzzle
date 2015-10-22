@@ -99,14 +99,25 @@ class Solver:
 
         path.append((aux, aux.move))
 
-        print (len(path))
+        print(len(path))
 
         path.reverse()
         for node, move in path:
             print(move)
             print(node)
 
-        # while path:
-        #     print(path.pop())
+            # while path:
+            #     print(path.pop())
 
+    @staticmethod
+    def number_of_misplaced_tiles(board):
+        misplaced_tiles = 0
+        for i in range(3):
+            for j in range(3):
+                if board[i][j] != Solver.solution.board[i][j]:
+                    misplaced_tiles += 1
+        return misplaced_tiles
 
+    @staticmethod
+    def distance_to_objective(board):
+        pass
