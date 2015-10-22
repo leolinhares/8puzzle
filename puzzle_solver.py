@@ -5,21 +5,7 @@ from copy import copy, deepcopy
 
 class Solver:
     def __init__(self):
-        self.solution = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
-
-    @property
-    def state(self):
-        return str(self)
-
-    def __str__(self):
-        """
-        Method designed to overwrite the print function.
-        :return: a properly formatted node printed
-        """
-        str1 = ''
-        for row in self.solution:
-            str1 = str1 + "\n" + ''.join(str(e) for e in row)
-        return str1
+        self.solution = Node([[1, 2, 3], [4, 5, 6], [7, 8, 0]])
 
     board_movements = {(0, 0): ('R', 'D'),
                        (0, 1): ('L', 'R', 'D'),
@@ -77,7 +63,7 @@ class Solver:
     def bfs(self):
         root = Node()
 
-        if root.state == self.state:
+        if root.state == self.solution.state:
             return root.board
 
         frontier = deque()  # Creating a FIFO (queue)
@@ -89,7 +75,7 @@ class Solver:
         while frontier:
             node = frontier.pop()  # Removing the first element of the queue (will be explored)
 
-            if node.state == self.state:
+            if node.state == self.solution.state:
                 return node
 
             # problem being solved
