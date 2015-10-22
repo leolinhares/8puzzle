@@ -60,10 +60,20 @@ class Solver:
             pass
         return new_board
 
+    # @staticmethod
+    # def backtrace(parent, root):
+    #     s = Solver()
+    #     path = [s.solution.state]
+    #     while path[-1] != root.state:
+    #         path.append(parent[path[-1]])
+    #     path.reverse()
+    #     return path
+
     def bfs(self):
         root = Node()
 
         if root.state == self.solution.state:
+            print("eita")
             return root.board
 
         frontier = deque()  # Creating a FIFO (queue)
@@ -73,7 +83,7 @@ class Solver:
         # a = 0
         # checking if the queue is empty
         while frontier:
-            node = frontier.pop()  # Removing the first element of the queue (will be explored)
+            node = frontier.popleft()  # Removing the first element of the queue (will be explored)
 
             if node.state == self.solution.state:
                 return node
@@ -89,5 +99,8 @@ class Solver:
                 child_node.board = new_board
 
                 if child_node.state not in explored:
+                    child_node.parent = node
                     frontier.appendleft(child_node)
                     explored.add(child_node.state)
+        return "error"
+
