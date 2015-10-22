@@ -24,6 +24,7 @@ class Node:
     def parent(self):
         return self._parent
 
+
     @parent.setter
     def parent(self, parent):
         self._parent = parent
