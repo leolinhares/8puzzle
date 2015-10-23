@@ -1,5 +1,23 @@
 from node import Node
 from collections import deque
+import heapq
+
+
+class PriorityQueue:
+    def __init__(self):
+        self.elements = []
+
+    def empty(self):
+        return len(self.elements) == 0
+
+    def put(self, item, priority):
+        heapq.heappush(self.elements, (priority, item))
+
+    def get(self):
+        return heapq.heappop(self.elements)[1]
+
+    def exists(self, item):
+        return item in (x[1] for x in self.elements)
 
 
 class Solver:
@@ -110,7 +128,7 @@ class Solver:
             #     print(path.pop())
 
     @staticmethod
-    def number_of_misplaced_tiles(board):
+    def hamming(board):
         misplaced_tiles = 0
         for i in range(3):
             for j in range(3):
@@ -121,3 +139,46 @@ class Solver:
     @staticmethod
     def distance_to_objective(board):
         pass
+
+    @staticmethod
+    def to_matrix(string):
+        l = list(map(int, string))
+        matrix = []
+        while l:
+            matrix.append(l[:3])
+            l = l[3:]
+        return matrix
+
+    @staticmethod
+    def a_star():
+        path_cost = 0
+        visited, frontier = set(), PriorityQueue()
+
+        root = Node()
+        frontier.put(root.state, 0)
+        priority = Solver.hamming(root.board)
+
+        frontier.put(root.state, path_cost+priority)
+
+        while frontier:
+            node_state = frontier.get()
+            matrix = Solver.to_matrix(node_state)
+            node = Node(matrix)
+
+            if node_state in visited:
+                continue
+
+            if node_state == Solver.solution.state:
+                return node_state
+            visited.add(node_state)
+            path_cost += 1
+
+            for child in Solver.generate_children(node):
+                priority = Solver.hamming(child.board)
+                total = priority+path_cost
+                if child.state not in visited:
+                    frontier.put(child.state, total)
+                # elif frontier.exists(child.state):
+                    #     if child priority > total:
+                    #         exchange
+        return "Error"
