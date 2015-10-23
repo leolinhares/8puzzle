@@ -125,6 +125,7 @@ class Solver:
             for child in Solver.generate_children(node):
                 if child.state not in visited:
                     if child.state == Solver.solution.state:
+                        print("Number of visited nodes: %d" % len(visited))
                         return child
                     else:
                         queue.appendleft(child)
@@ -192,6 +193,7 @@ class Solver:
                 continue
 
             if node_state == Solver.solution.state:
+                print("number of node: %d" % len(visited))
                 return node_state
             visited.add(node_state)
             path_cost += 1
