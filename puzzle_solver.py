@@ -175,36 +175,33 @@ class Solver:
 
     @staticmethod
     def a_star():
-        path_cost = 0
         visited, frontier = set(), PriorityQueue()
 
         root = Node()
-        frontier.put(root.state, 0)
-        priority = Solver.hamming(root.board)
-
-        frontier.put(root.state, path_cost+priority)
+        priority = Solver.calculate_distance(root.board)
+        frontier.put(root.state, root.calculate_path_cost() + priority)
 
         while frontier:
+            # removing the frontier lowest priority node (PriorityQueue)
             node_state = frontier.get()
             matrix = Solver.to_matrix(node_state)
             node = Node(matrix)
 
-            if node_state in visited:
-                continue
-
+            # if the node is the solution, return the node
             if node_state == Solver.solution.state:
                 print("number of node: %d" % len(visited))
                 return node_state
-            visited.add(node_state)
-            path_cost += 1
 
+            # adding node to visited set
+            visited.add(node_state)
+
+            # exploring the node children
             for child in Solver.generate_children(node):
-                priority = Solver.hamming(child.board)
-                total = priority+path_cost
+                priority = Solver.calculate_distance(child.board)
+                path_cost = child.calculate_path_cost()
                 if child.state not in visited:
-                    frontier.put(child.state, total)
+                    frontier.put(child.state, priority+path_cost)
                 # elif frontier.exists(child.state):
                     #     if child priority > total:
                     #         exchange
         return "Error"
-

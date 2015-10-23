@@ -14,7 +14,7 @@ class Node:
             # 0 self._board = [[0, 1, 3], [4, 2, 5], [7, 8, 6]]
             # self._board = [[8, 0, 6], [5, 4, 7], [2, 3, 1]]
             # self._board = [[0, 8, 4], [2, 6, 1], [3, 5, 7]]
-            # self._board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+            self._board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
             # self._board = [[7, 8, 1], [2, 3, 5], [0, 6, 4]]
 
             # 22 moves, 23 nodes, 3seconds
@@ -25,7 +25,7 @@ class Node:
 
             # A star 7163 nodes, 0.46s
             # BFS 0.23s 5101 node, 16 moves
-            self._board = [[0, 4, 1], [7, 3, 6], [5, 8, 2]]
+            # self._board = [[0, 4, 1], [7, 3, 6], [5, 8, 2]]
 
             # self._board = [[3, 4, 6], [2, 1, 5], [0, 7, 8]]
             # self._board = [[3, 1, 8], [2, 5, 6], [7, 4, 0]]
@@ -35,6 +35,11 @@ class Node:
             # self._board = [[3, 2, 7], [5, 6, 8], [4, 1, 0]]
 
             # self._board = [[1,2,3], [4,5,6], [7,8,0]]
+
+    def calculate_path_cost(self):
+        if self.parent is not None:
+            self.path_cost = self.parent.path_cost + 1
+        return self.path_cost
 
     @property
     def state(self):
