@@ -117,8 +117,8 @@ class Solver:
             if node.state in visited:
                 continue
 
-            if node.state == Solver.solution.state:
-                return node
+            # if node.state == Solver.solution.state:
+            #     return node
 
             visited.add(node.state)
 
