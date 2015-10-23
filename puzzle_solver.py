@@ -85,6 +85,30 @@ class Solver:
         return children
 
     @staticmethod
+    def number_of_misplaced_tiles(board):
+        misplaced_tiles = 0
+        for i in range(3):
+            for j in range(3):
+                if board[i][j] != Solver.solution.board[i][j]:
+                    misplaced_tiles += 1
+        return misplaced_tiles
+
+
+    @staticmethod
+    def calculate_distance(board):
+        manhattan_distance = 0
+        for i in range(3):
+            for j in range(3):
+                value = board[i][j]
+                if value != 0:
+                    targetx = (value - 1) // 3
+                    targety = (value - 1) % 3
+                    dx = i - targetx
+                    dy = j - targety
+                    manhattan_distance = manhattan_distance + abs(dx) + abs(dy)
+        return manhattan_distance
+
+    @staticmethod
     def breadth_first_search():
         root = Node()
         visited, queue = set(), deque([root])
@@ -122,10 +146,9 @@ class Solver:
         path.reverse()
         for node, move in path:
             print(move)
+            print(Solver.calculate_distance(node.board))
             print(node)
 
-            # while path:
-            #     print(path.pop())
 
     @staticmethod
     def hamming(board):
@@ -182,3 +205,4 @@ class Solver:
                     #     if child priority > total:
                     #         exchange
         return "Error"
+
