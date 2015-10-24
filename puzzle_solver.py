@@ -4,6 +4,9 @@ import heapq
 
 
 class PriorityQueue:
+    """
+        Class created wrap python implementation of a priority queue (heap)
+    """
     def __init__(self):
         self.elements = []
 
