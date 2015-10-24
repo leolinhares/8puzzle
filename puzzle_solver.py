@@ -22,7 +22,7 @@ class PriorityQueue:
 
 class Solver:
     solution = Node([[1, 2, 3], [4, 5, 6], [7, 8, 0]])
-
+    iguais = []
     board_movements = {(0, 0): ('R', 'D'),
                        (0, 1): ('L', 'R', 'D'),
                        (0, 2): ('L', 'D'),
@@ -147,7 +147,7 @@ class Solver:
         path.reverse()
         for node, move in path:
             print(move)
-            print(Solver.calculate_distance(node.board))
+            # print(Solver.calculate_distance(node.board))
             print(node)
 
 
@@ -161,10 +161,6 @@ class Solver:
         return misplaced_tiles
 
     @staticmethod
-    def distance_to_objective(board):
-        pass
-
-    @staticmethod
     def to_matrix(string):
         l = list(map(int, string))
         matrix = []
@@ -176,8 +172,14 @@ class Solver:
     @staticmethod
     def a_star():
         visited, frontier = set(), PriorityQueue()
+        all_paths = {}
 
         root = Node()
+
+        # The idea is to story in a dictionary the node parent as the key
+        # and the node itself as value
+        all_paths[''] = root.state
+
         priority = Solver.calculate_distance(root.board)
         frontier.put(root.state, root.calculate_path_cost() + priority)
 
@@ -189,8 +191,8 @@ class Solver:
 
             # if the node is the solution, return the node
             if node_state == Solver.solution.state:
-                print("number of node: %d" % len(visited))
-                return node_state
+                print("number of nodes: %d" % len(visited))
+                return node_state, all_paths
 
             # adding node to visited set
             visited.add(node_state)
@@ -204,4 +206,8 @@ class Solver:
                 # elif frontier.exists(child.state):
                     #     if child priority > total:
                     #         exchange
+
+                # This line will update the parent of each child node
+                all_paths[node_state] = child.state
+
         return "Error"
