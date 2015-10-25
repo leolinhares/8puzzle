@@ -2,8 +2,8 @@ from puzzle_solver import Solver
 import time
 start_time = time.time()
 
-# Solver.draw_path(Solver.breadth_first_search())
-node_state, all_paths = Solver.a_star()
+Solver.draw_path(Solver.breadth_first_search())
+# node_state, all_paths = Solver.a_star()
 
 # lista = []
 #
@@ -13,8 +13,8 @@ node_state, all_paths = Solver.a_star()
 #             lista.append(parent)
 #             find_parent(parent)
 
-print(node_state)
-print(len(all_paths))
+# print(node_state)
+# print(len(all_paths))
 # find_parent(node_state)
 # print(lista)
 

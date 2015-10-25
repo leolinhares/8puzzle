@@ -178,6 +178,7 @@ class Solver:
         all_paths = {}
 
         root = Node()
+        print(root)
 
         # The idea is to story in a dictionary the node parent as the key
         # and the node itself as value

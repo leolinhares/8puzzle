@@ -1,3 +1,6 @@
+import eight_puzzle
+
+
 class Node:
     def __init__(self, board=None):
         self.move = ''
@@ -8,6 +11,8 @@ class Node:
         if board:
             self._board = [elem[:] for elem in board]
         else:
+            puzzle = eight_puzzle.generate_random_puzzle()
+            self._board = [elem[:] for elem in puzzle]
             # self._board = [[6, 4, 0], [8, 1, 7], [5, 2, 3]]
             # self._board = [[1, 2, 0], [4, 5, 3], [7, 8, 6]]
             # self._board = [[1, 2, 3], [4, 5, 6], [7, 0, 8]]
@@ -18,7 +23,7 @@ class Node:
             # self._board = [[7, 8, 1], [2, 3, 5], [0, 6, 4]]
 
             # 22 moves, 23 nodes, 3seconds
-            self._board = [[6, 5, 4], [7, 3, 1], [0, 8, 2]]
+            # self._board = [[6, 5, 4], [7, 3, 1], [0, 8, 2]]
 
             # 24 moves, 25 nodes, 5.94 seconds
             # self._board = [[7, 4, 8], [1, 5, 3], [0, 6, 2]]
