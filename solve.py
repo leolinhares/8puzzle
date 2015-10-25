@@ -12,7 +12,7 @@ def main():
 
             Press enter to quit
             """)
-        option = input("\nWhat do you like to do?")
+        option = input("\nWhat do you like to do? ")
         if option == "1":
             start_time = time.time()
             Solver.draw_path(Solver.breadth_first_search())

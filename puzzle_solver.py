@@ -26,15 +26,15 @@ class PriorityQueue:
 class Solver:
     solution = Node([[1, 2, 3], [4, 5, 6], [7, 8, 0]])
     iguais = []
-    board_movements = {(0, 0): ('R', 'D'),
-                       (0, 1): ('L', 'R', 'D'),
-                       (0, 2): ('L', 'D'),
-                       (1, 0): ('U', 'R', 'D'),
-                       (1, 1): ('L', 'U', 'R', 'D'),
-                       (1, 2): ('L', 'U', 'D'),
-                       (2, 0): ('U', 'R'),
-                       (2, 1): ('L', 'U', 'R'),
-                       (2, 2): ('L', 'U')}
+    board_movements = {(0, 0): ('Right', 'Down'),
+                       (0, 1): ('Left', 'Right', 'Down'),
+                       (0, 2): ('Left', 'Down'),
+                       (1, 0): ('Up', 'Right', 'Down'),
+                       (1, 1): ('Left', 'Up', 'Right', 'Down'),
+                       (1, 2): ('Left', 'Up', 'Down'),
+                       (2, 0): ('Up', 'Right'),
+                       (2, 1): ('Left', 'Up', 'Right'),
+                       (2, 2): ('Left', 'Up')}
 
     empty_board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 
@@ -70,13 +70,13 @@ class Solver:
 
         for movement in movements:
             child_i, child_j = parent_i, parent_j
-            if movement == 'L':
+            if movement == 'Left':
                 child_i, child_j = parent_i, parent_j - 1
-            elif movement == 'U':
+            elif movement == 'Up':
                 child_i, child_j = parent_i - 1, parent_j
-            elif movement == 'R':
+            elif movement == 'Right':
                 child_i, child_j = parent_i, parent_j + 1
-            elif movement == 'D':
+            elif movement == 'Down':
                 child_i, child_j = parent_i + 1, parent_j
             else:
                 pass
