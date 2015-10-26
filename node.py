@@ -1,6 +1,8 @@
 import eight_puzzle
 
-
+"""
+    Definition of a node
+"""
 class Node:
     def __init__(self, board=None):
         self.move = ''
