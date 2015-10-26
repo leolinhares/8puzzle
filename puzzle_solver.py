@@ -19,8 +19,8 @@ class PriorityQueue:
     def get(self):
         return heapq.heappop(self.elements)[1]
 
-    def exists(self, item):
-        return item in (x[1] for x in self.elements)
+    def exists(self, elem):
+        return elem in (item[1] for item in self.elements)
 
 
 class Solver:
@@ -28,7 +28,6 @@ class Solver:
         Solver class
     """
     solution = Node([[1, 2, 3], [4, 5, 6], [7, 8, 0]])
-    iguais = []
     board_movements = {(0, 0): ('Right', 'Down'),
                        (0, 1): ('Left', 'Right', 'Down'),
                        (0, 2): ('Left', 'Down'),
@@ -91,30 +90,6 @@ class Solver:
         return children
 
     @staticmethod
-    def number_of_misplaced_tiles(board):
-        misplaced_tiles = 0
-        for i in range(3):
-            for j in range(3):
-                if board[i][j] != Solver.solution.board[i][j]:
-                    misplaced_tiles += 1
-        return misplaced_tiles
-
-
-    @staticmethod
-    def calculate_distance(board):
-        manhattan_distance = 0
-        for i in range(3):
-            for j in range(3):
-                value = board[i][j]
-                if value != 0:
-                    targetx = (value - 1) // 3
-                    targety = (value - 1) % 3
-                    dx = i - targetx
-                    dy = j - targety
-                    manhattan_distance = manhattan_distance + abs(dx) + abs(dy)
-        return manhattan_distance
-
-    @staticmethod
     def breadth_first_search():
         root = Node()
         visited, queue = set(), deque([root])
@@ -156,7 +131,6 @@ class Solver:
             # print(Solver.calculate_distance(node.board))
             print(node)
 
-
     @staticmethod
     def hamming(board):
         misplaced_tiles = 0
@@ -165,6 +139,20 @@ class Solver:
                 if board[i][j] != Solver.solution.board[i][j]:
                     misplaced_tiles += 1
         return misplaced_tiles
+
+    @staticmethod
+    def manhattan_distance(board):
+        manhattan_distance = 0
+        for i in range(3):
+            for j in range(3):
+                value = board[i][j]
+                if value != 0:
+                    targetx = (value - 1) // 3
+                    targety = (value - 1) % 3
+                    dx = i - targetx
+                    dy = j - targety
+                    manhattan_distance = manhattan_distance + abs(dx) + abs(dy)
+        return manhattan_distance
 
     @staticmethod
     def to_matrix(string):
@@ -187,7 +175,7 @@ class Solver:
         # and the node itself as value
         all_paths[''] = root.state
 
-        priority = Solver.calculate_distance(root.board)
+        priority = Solver.manhattan_distance(root.board)
         frontier.put(root.state, root.calculate_path_cost() + priority)
 
         while frontier:
@@ -206,13 +194,10 @@ class Solver:
 
             # exploring the node children
             for child in Solver.generate_children(node):
-                priority = Solver.calculate_distance(child.board)
+                priority = Solver.manhattan_distance(child.board)
                 path_cost = child.calculate_path_cost()
                 if child.state not in visited:
                     frontier.put(child.state, priority+path_cost)
-                # elif frontier.exists(child.state):
-                    #     if child priority > total:
-                    #         exchange
 
                 # This line will update the parent of each child node
                 all_paths[node_state] = child.state

@@ -36,7 +36,3 @@ def count_inversions(puzzle_list):
             if puzzle_list[j] and puzzle_list[i] and puzzle_list[i] > puzzle_list[j]:
                 inversions += 1
     return inversions
-
-
-# print(generate_random_puzzle())
-# print(count_inversions([7,1,2,5,3,9,8,0,6]))
