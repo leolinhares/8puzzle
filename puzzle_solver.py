@@ -24,6 +24,9 @@ class PriorityQueue:
 
 
 class Solver:
+    """
+        Solver class
+    """
     solution = Node([[1, 2, 3], [4, 5, 6], [7, 8, 0]])
     iguais = []
     board_movements = {(0, 0): ('R', 'D'),
