@@ -11,9 +11,10 @@ class Node:
         if board:
             self._board = [elem[:] for elem in board]
         else:
-            # puzzle = eight_puzzle.generate_random_puzzle()
-            # self._board = [elem[:] for elem in puzzle]
-            self._board = [[1, 0, 6], [3, 2, 5], [7, 8, 4]]
+            puzzle = eight_puzzle.generate_random_puzzle()
+            self._board = [elem[:] for elem in puzzle]
+            # self._board = [[1, 0, 6], [3, 2, 5], [7, 8, 4]]
+            # self._board = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
 
     def calculate_path_cost(self):
         if self.parent is not None:
@@ -70,3 +71,6 @@ class Node:
         :return: if they are equal or not
         """
         return self.state == other.state
+
+    def __lt__(self, other):
+        return self.state < other.state

@@ -33,21 +33,27 @@ import time
 def main():
     start_time = time.time()
     # Solver.draw_path(Solver.breadth_first_search())
-    node_state, all_paths = Solver.a_star()
-
-    def draw():
-        aux = node_state
-        print(node_state)
-        i = 0
-        while all_paths[aux] != 'no_parent':
-            print(i)
-            print(all_paths[aux])
-            aux = all_paths[aux]
-            i += 1
-
-    print("Solution: %s" % node_state)
-    print(draw())
-    # print(Solver.a_star())
+    # node_state = Solver.a_star()
+    #
+    # def draw():
+    #     path = []
+    #     aux = node_state
+    #     while aux.parent is not None:
+    #         path.append((aux, aux.move))
+    #         aux = aux.parent
+    #
+    #     path.append((aux, aux.move))
+    #
+    #     print(len(path))
+    #
+    #     path.reverse()
+    #     for node, move in path:
+    #         print(move)
+    #         print(node)
+    #
+    # print("Solution: %s\n" % node_state)
+    # print(draw())
+    Solver.draw_path(Solver.a_star())
     print("--- %s seconds ---" % (time.time() - start_time))
 
 

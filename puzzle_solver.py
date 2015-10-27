@@ -147,49 +147,39 @@ class Solver:
         return manhattan_distance
 
     @staticmethod
-    def to_matrix(string):
-        l = list(map(int, string))
-        matrix = []
-        while l:
-            matrix.append(l[:3])
-            l = l[3:]
-        return matrix
-
-    @staticmethod
     def a_star():
+        # Creating an empty set to store the visited nodes and
+        # a priority queue to store the frontier nodes
         visited, frontier = set(), PriorityQueue()
-        all_paths = {}
+
+        # Creating the root
         root = Node()
-        print(root)
-
-        # The idea is to story in a dictionary the child as the key
-        # and the node itself as value to create a path of nodes.
-        all_paths[root.state] = 'no_parent'
-
+        # print(root)
         priority = Solver.manhattan_distance(root.board)
-        frontier.put(root.state, root.calculate_path_cost() + priority)
+        path_cost = root.calculate_path_cost()
+        frontier.put(root, path_cost + priority)
 
         while frontier:
             # removing the frontier lowest priority node (PriorityQueue)
-            node_state = frontier.get()
-            matrix = Solver.to_matrix(node_state)
-            node = Node(matrix)
+            new_node = frontier.get()
 
-            # if the node is the solution, return the node
-            if node_state == Solver.solution.state:
-                print("number of nodes: %d" % len(visited))
-                return node_state, all_paths
+            if new_node.state == Solver.solution.state:
+                print("Number of visited nodes: %d" % len(visited))
+                return new_node
 
-            # adding node to visited set
-            visited.add(node_state)
+            # visited cannot add a node, hence the node state is added
+            visited.add(new_node.state)
 
             # exploring the node children
-            for child in Solver.generate_children(node):
-                priority = Solver.manhattan_distance(child.board)
-                path_cost = child.calculate_path_cost()
+            for child in Solver.generate_children(new_node):
+                manhattan = Solver.manhattan_distance(child.board)
+                child_path_cost = child.calculate_path_cost()
                 if child.state not in visited:
-                    frontier.put(child.state, priority + path_cost)
-                    # This line will update the parent of each child node
-                    all_paths[child.state] = node_state
+                    frontier.put(child, manhattan + child_path_cost)
+        #         path_cost = child.calculate_path_cost()
+        #         if child.state not in visited:
+        #             frontier.put(child.state, priority + path_cost)
+        #             # This line will update the parent of each child node
+        #             all_paths[child.state] = node_state
 
         return "Error"
