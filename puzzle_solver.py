@@ -154,7 +154,6 @@ class Solver:
 
         # Creating the root
         root = Node()
-        # print(root)
         priority = Solver.manhattan_distance(root.board)
         path_cost = root.calculate_path_cost()
         frontier.put(root, path_cost + priority)
@@ -172,14 +171,9 @@ class Solver:
 
             # exploring the node children
             for child in Solver.generate_children(new_node):
-                manhattan = Solver.manhattan_distance(child.board)
+                heuristic = Solver.manhattan_distance(child.board)
                 child_path_cost = child.calculate_path_cost()
                 if child.state not in visited:
-                    frontier.put(child, manhattan + child_path_cost)
-        #         path_cost = child.calculate_path_cost()
-        #         if child.state not in visited:
-        #             frontier.put(child.state, priority + path_cost)
-        #             # This line will update the parent of each child node
-        #             all_paths[child.state] = node_state
+                    frontier.put(child, heuristic + child_path_cost)
 
         return "Error"
