@@ -169,13 +169,12 @@ class Solver:
         all_paths = {}
 
         root = Node()
-        print(root)
 
         # The idea is to story in a dictionary the node parent as the key
         # and the node itself as value
         all_paths[''] = root.state
 
-        priority = Solver.manhattan_distance(root.board)
+        priority = Solver.hamming(root.board)
         frontier.put(root.state, root.calculate_path_cost() + priority)
 
         while frontier:
@@ -194,7 +193,7 @@ class Solver:
 
             # exploring the node children
             for child in Solver.generate_children(node):
-                priority = Solver.manhattan_distance(child.board)
+                priority = Solver.hamming(child.board)
                 path_cost = child.calculate_path_cost()
                 if child.state not in visited:
                     frontier.put(child.state, priority+path_cost)

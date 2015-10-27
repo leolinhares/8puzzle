@@ -33,7 +33,7 @@ import time
 def main():
     start_time = time.time()
     Solver.draw_path(Solver.breadth_first_search())
-    # node_state, all_paths = Solver.a_star()
+    node_state, all_paths = Solver.a_star()
 
     # lista = []
     #
