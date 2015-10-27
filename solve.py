@@ -47,6 +47,7 @@ def main():
 
     print("Solution: %s" % node_state)
     print(draw())
+    # print(Solver.a_star())
     print("--- %s seconds ---" % (time.time() - start_time))
 
 

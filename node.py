@@ -11,9 +11,9 @@ class Node:
         if board:
             self._board = [elem[:] for elem in board]
         else:
-            puzzle = eight_puzzle.generate_random_puzzle()
-            self._board = [elem[:] for elem in puzzle]
-            # self._board = [[2,3,6],[1,5,8],[0,4,7]]
+            # puzzle = eight_puzzle.generate_random_puzzle()
+            # self._board = [elem[:] for elem in puzzle]
+            self._board = [[1, 0, 6], [3, 2, 5], [7, 8, 4]]
 
     def calculate_path_cost(self):
         if self.parent is not None:
@@ -35,24 +35,22 @@ class Node:
         node_str = ''.join(str(item) for row in self.board for item in row)
         return node_str
 
-    '''
+    @property
+    def board(self):
+        """
         This property creates the getter for the board object and
         it is possible to access it by just: object.board instead of
         using object.get_board
-    '''
-
-    @property
-    def board(self):
+        """
         return self._board
-
-    '''
-        The property way of defining a setter
-        Instead of typing object.set_board(value), one can just
-        use it like a normal variable: object.board = value
-    '''
 
     @board.setter
     def board(self, new_board):
+        """
+        The property way of defining a setter
+        Instead of typing object.set_board(value), one can just
+        use it like a normal variable: object.board = value
+        """
         self._board = [elem[:] for elem in new_board]
 
     def __str__(self):

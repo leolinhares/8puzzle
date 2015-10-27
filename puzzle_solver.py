@@ -25,9 +25,6 @@ class PriorityQueue:
 
 
 class Solver:
-    """
-        Solver class
-    """
     solution = Node([[1, 2, 3], [4, 5, 6], [7, 8, 0]])
     board_movements = {(0, 0): ('Right', 'Down'),
                        (0, 1): ('Left', 'Right', 'Down'),
@@ -38,8 +35,6 @@ class Solver:
                        (2, 0): ('Up', 'Right'),
                        (2, 1): ('Left', 'Up', 'Right'),
                        (2, 2): ('Left', 'Up')}
-
-    empty_board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 
     @staticmethod
     def find_blank_space(board):
@@ -99,9 +94,6 @@ class Solver:
             if node.state in visited:
                 continue
 
-            # if node.state == Solver.solution.state:
-            #     return node
-
             visited.add(node.state)
 
             for child in Solver.generate_children(node):
@@ -129,7 +121,6 @@ class Solver:
         path.reverse()
         for node, move in path:
             print(move)
-            # print(Solver.calculate_distance(node.board))
             print(node)
 
     @staticmethod
@@ -175,7 +166,7 @@ class Solver:
         # and the node itself as value to create a path of nodes.
         all_paths[root.state] = 'no_parent'
 
-        priority = Solver.hamming(root.board)
+        priority = Solver.manhattan_distance(root.board)
         frontier.put(root.state, root.calculate_path_cost() + priority)
 
         while frontier:
@@ -194,7 +185,7 @@ class Solver:
 
             # exploring the node children
             for child in Solver.generate_children(node):
-                priority = Solver.hamming(child.board)
+                priority = Solver.manhattan_distance(child.board)
                 path_cost = child.calculate_path_cost()
                 if child.state not in visited:
                     frontier.put(child.state, priority + path_cost)
