@@ -99,15 +99,16 @@ class Solver:
             for child in Solver.generate_children(node):
                 if child.state not in visited:
                     if child.state == Solver.solution.state:
-                        print("Number of visited nodes: %d" % len(visited))
-                        return child
+                        # print("Number of visited nodes: %d" % len(visited))
+                        return child, len(visited)-1
                     else:
                         queue.appendleft(child)
         return "Error"
 
     @staticmethod
     def draw_path(node_result):
-
+        exported_path = []
+        move_list = []
         path = []
         aux = node_result
         while aux.parent is not None:
@@ -116,12 +117,17 @@ class Solver:
 
         path.append((aux, aux.move))
 
-        print(len(path))
+        number_of_moves = (len(path)-1)
 
         path.reverse()
         for node, move in path:
-            print(move)
-            print(node)
+            if move != "":
+                move_list.append(move)
+            exported_path.append(node)
+        move_list.append("End")
+        move_list.append("End")
+        exported_path.append("End")
+        return exported_path, move_list, number_of_moves
 
     @staticmethod
     def hamming(board):
@@ -147,14 +153,18 @@ class Solver:
         return manhattan_distance
 
     @staticmethod
-    def a_star():
+    def a_star(choice=0):
         # Creating an empty set to store the visited nodes and
         # a priority queue to store the frontier nodes
         visited, frontier = set(), PriorityQueue()
 
         # Creating the root
         root = Node()
-        priority = Solver.manhattan_distance(root.board)
+        if choice == 1:
+            priority = Solver.hamming(root.board)
+        else:
+            priority = Solver.manhattan_distance(root.board)
+
         path_cost = root.calculate_path_cost()
         frontier.put(root, path_cost + priority)
 
@@ -163,17 +173,21 @@ class Solver:
             new_node = frontier.get()
 
             if new_node.state == Solver.solution.state:
-                print("Number of visited nodes: %d" % len(visited))
-                return new_node
+                return new_node, len(visited)
 
             # visited cannot add a node, hence the node state is added
             visited.add(new_node.state)
 
             # exploring the node children
             for child in Solver.generate_children(new_node):
-                heuristic = Solver.manhattan_distance(child.board)
+
+                if choice == 1:
+                    heuristic_value = Solver.hamming(child.board)
+                else:
+                    heuristic_value = Solver.manhattan_distance(child.board)
+
                 child_path_cost = child.calculate_path_cost()
                 if child.state not in visited:
-                    frontier.put(child, heuristic + child_path_cost)
+                    frontier.put(child, heuristic_value + child_path_cost)
 
         return "Error"
