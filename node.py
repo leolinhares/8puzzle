@@ -1,8 +1,6 @@
 import eight_puzzle
 
-"""
-    Definition of a node
-"""
+
 class Node:
     def __init__(self, board=None):
         self.move = ''
@@ -15,6 +13,7 @@ class Node:
         else:
             puzzle = eight_puzzle.generate_random_puzzle()
             self._board = [elem[:] for elem in puzzle]
+            # self._board = [[2,3,6],[1,5,8],[0,4,7]]
 
     def calculate_path_cost(self):
         if self.parent is not None:

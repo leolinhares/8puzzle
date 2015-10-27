@@ -7,6 +7,7 @@ class PriorityQueue:
     """
         Class created wrap python implementation of a priority queue (heap)
     """
+
     def __init__(self):
         self.elements = []
 
@@ -167,15 +168,14 @@ class Solver:
     def a_star():
         visited, frontier = set(), PriorityQueue()
         all_paths = {}
-
         root = Node()
         print(root)
 
-        # The idea is to story in a dictionary the node parent as the key
-        # and the node itself as value
-        all_paths[''] = root.state
+        # The idea is to story in a dictionary the child as the key
+        # and the node itself as value to create a path of nodes.
+        all_paths[root.state] = 'no_parent'
 
-        priority = Solver.manhattan_distance(root.board)
+        priority = Solver.hamming(root.board)
         frontier.put(root.state, root.calculate_path_cost() + priority)
 
         while frontier:
@@ -194,12 +194,11 @@ class Solver:
 
             # exploring the node children
             for child in Solver.generate_children(node):
-                priority = Solver.manhattan_distance(child.board)
+                priority = Solver.hamming(child.board)
                 path_cost = child.calculate_path_cost()
                 if child.state not in visited:
-                    frontier.put(child.state, priority+path_cost)
-
-                # This line will update the parent of each child node
-                all_paths[node_state] = child.state
+                    frontier.put(child.state, priority + path_cost)
+                    # This line will update the parent of each child node
+                    all_paths[child.state] = node_state
 
         return "Error"
